@@ -1,6 +1,35 @@
 import argparse
 import configparser
+from datetime import datetime
+import re
+from textwrap import wrap
 from pathlib import Path
+
+# here I am using %L for entry title, and %E for entry text
+new_title_format = "# %Y-%m-%d daily log"
+append_title_format = '''## %I:%M %p (%L)
+%E'''
+title_format = '''## %I:%M %p
+'''
+wrap_width = 54
+
+def parse_format_string(string, **kwargs):
+    new_directives = {
+        'L':kwargs.get('title',''),
+        'E':kwargs.get('entry','')
+    }
+    string = datetime.now().strftime(string)
+    for directive,value in new_directives.items():
+        string = re.sub('%'+directive,value,string)
+    return string
+
+def make_header(datetime):
+    # Write an h2 into the file with the current time (or configurable)
+    return
+
+def open_in_editor(file):
+    # Open a file in an editor
+    return
 
 def load_conf(config_file):
     config = configparser.ConfigParser()
