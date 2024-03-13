@@ -1,16 +1,17 @@
 import argparse
 import configparser
 from datetime import datetime
+import os
 import re
+import subprocess
 from textwrap import wrap
 from pathlib import Path
 
 # here I am using %L for entry title, and %E for entry text
-new_title_format = "# %Y-%m-%d daily log"
-append_title_format = '''## %I:%M %p (%L)
-%E'''
-title_format = '''## %I:%M %p
-'''
+# the directives unaffected by strftime are ioqvEJKLNOQ
+h1_title_format = "%Y-%m-%d daily log"
+h2_inline_format = '%I:%M %p {if title: (%L)}\n%E'
+h2_format = '%I:%M %p\n'
 wrap_width = 54
 
 def parse_format_string(string, **kwargs):
@@ -29,6 +30,8 @@ def make_header(datetime):
 
 def open_in_editor(file):
     # Open a file in an editor
+    editor = os.environ.get('EDITOR','vi')
+    subprocess.call([editor, file])
     return
 
 def load_conf(config_file):
@@ -61,7 +64,6 @@ def main(args):
         case 'write':
             print(f'write entry {args.title}: {args.entry}')
             return
-
 
 if __name__ == "__main__":
     args = parse_args()
