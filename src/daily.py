@@ -120,13 +120,22 @@ def parse_args():
 
 def main(args):
     # conf = load_conf()
+    today_file = make_dirpath(journal_dir).joinpath(datetime.now().strftime(filename_format))
     match args.command:
         case 'list':
             print('list of dailies!')
-            return
+            return # skip opening editor
+        case 'add':
+            # print(f'write entry {args.title}: {args.entry}')
+            add_entry(today_file, args.mood[0], args.mood[1:],args.entry)
+            return # skip opening editor
         case 'write':
-            print(f'write entry {args.title}: {args.entry}')
-            return
+            add_write_headers(today_file)
+        case 'edit':
+            pass
+    open_in_editor(today_file)
+    wrap_file(today_file,wrap_width)
+    return
 
 if __name__ == "__main__":
     args = parse_args()
