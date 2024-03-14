@@ -8,16 +8,20 @@ from textwrap import wrap
 from pathlib import Path
 import textwrap
 
-# here I am using %L for entry title, and %E for entry text
+# here I am using %o for entry mood character, %O for mood words
+# and %E for entry text
 # the directives unaffected by strftime are ioqvEJKLNOQ
+journal_dir = "~/notes/daily"
+filename_format = "%Y-%m-%d_log.md"
 h1_title_format = "%Y-%m-%d daily log"
-h2_inline_format = '%I:%M %p {if title: (%L)}\n%E'
-h2_format = '%I:%M %p\n'
+h2_inline_format = '%I:%M %p %o (%O)\n%E'
+h2_format = '%I:%M %p'
 wrap_width = 54
 
 def parse_format_string(string, **kwargs):
     new_directives = {
-        'L':kwargs.get('title',''),
+        'o':kwargs.get('mood_char',''),
+        'O':kwargs.get('mood_words',''),
         'E':kwargs.get('entry','')
     }
     string = datetime.now().strftime(string)
