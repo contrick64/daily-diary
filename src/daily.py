@@ -18,6 +18,11 @@ h2_inline_format = '%I:%M %p %o (%O)\n%E'
 h2_format = '%I:%M %p'
 wrap_width = 54
 
+def make_dirpath(path):
+    path = re.sub(r"^~",str(Path.home()),path)
+    path = Path(path)
+    return path
+
 def parse_format_string(string, **kwargs):
     new_directives = {
         'o':kwargs.get('mood_char',''),
