@@ -34,15 +34,47 @@ def parse_format_string(string, **kwargs):
         string = re.sub('%'+directive,value,string)
     return string
 
-def make_header(datetime):
-    # Write an h2 into the file with the current time (or configurable)
+def append_or_create_file(file,contents):
+    if not re.match(r'\n$',contents):
+        contents+='\n'
+    with open(file, 'a+') as f:
+        f.write(contents)
+    return
+
+def add_write_headers(file):
+    file = Path(file)
+    now = datetime.now()
+    contents = ""
+    if not file.exists():
+        contents += now.strftime("# "+h1_title_format)
+    contents += now.strftime("\n\n## "+h2_format+" ")
+    append_or_create_file(file,contents)
+    return
+
+def add_entry(file, mood_char:str, mood_words:list, entry:str):
+    file = Path(file)
+    now = datetime.now()
+    contents = ""
+    if not file.exists():
+        contents += now.strftime("# "+h1_title_format)
+    entry_vars = {
+        'mood_char':mood_char,
+        'mood_words':', '.join(mood_words),
+        'entry':wrap_preserving_newlines(entry[0],wrap_width)
+    }
+    contents += now.strftime("\n\n## "+parse_format_string(h2_inline_format,**entry_vars))
+    append_or_create_file(file,contents)
     return
 
 def open_in_editor(file):
     # Open a file in an editor
+    file = Path(file)
     editor = os.environ.get('EDITOR','vi')
-    subprocess.call([editor, file])
-    return
+    if editor.rpartition('/')[2] in ['vi','vim']:
+        exit_code = subprocess.call([editor, "+normal G$i", "+startinsert!", file])
+        return exit_code
+    exit_code = subprocess.call([editor, file])
+    return exit_code
 
 def wrap_file(file,wrap_width):
     with open(file, 'r') as f:
