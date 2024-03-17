@@ -91,6 +91,7 @@ def wrap_preserving_newlines(string_to_wrap,wrap_width):
     string_with_newlines = '\n'.join(line_list)
     return string_with_newlines
 
+
 def load_conf(config_file):
     config = configparser.ConfigParser()
     config.read(config_file)
@@ -119,7 +120,7 @@ def parse_args():
     return args
 
 def main(args):
-    # conf = load_conf()
+    conf = load_conf()
     today_file = make_dirpath(journal_dir).joinpath(datetime.now().strftime(filename_format))
     match args.command:
         case 'list':
