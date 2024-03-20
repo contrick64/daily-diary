@@ -4,7 +4,6 @@ from datetime import datetime
 import os
 import re
 import subprocess
-from textwrap import wrap
 from pathlib import Path
 import textwrap
 
@@ -118,7 +117,8 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def main(args):
+def main():
+    args = parse_args()
     # conf = load_conf()
     today_file = make_dirpath(journal_dir).joinpath(datetime.now().strftime(filename_format))
     match args.command:
@@ -138,5 +138,4 @@ def main(args):
     return
 
 if __name__ == "__main__":
-    args = parse_args()
-    main(args)
+    main()
