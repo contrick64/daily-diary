@@ -1,7 +1,6 @@
 from datetime import datetime
 import re
 
-
 def load_conf():
     # here I am using %o for entry mood character, %O for mood words
     # and %E for entry text
