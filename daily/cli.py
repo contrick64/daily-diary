@@ -22,8 +22,6 @@ def parse_args():
 
     edit_parser = subparsers.add_parser('edit', parents=[all_entry_parser], help="Edit today's entry without adding any headers")
 
-    list_parser = subparsers.add_parser('list', help="List existing entries")
-
     parser.set_defaults(command="write")
 
     args = parser.parse_args()
@@ -33,9 +31,6 @@ def main():
     args = parse_args()
     today_file = make_dirpath(conf['journal_dir']).joinpath(datetime.now().strftime(conf['filename_format']))
     match args.command:
-        case 'list':
-            print('list of dailies!')
-            return # skip opening editor
         case 'add':
             # print(f'write entry {args.title}: {args.entry}')
             add_entry(today_file, args.mood[0], args.mood[1:],args.entry)
