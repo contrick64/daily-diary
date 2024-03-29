@@ -19,3 +19,8 @@ daily = 'daily.daily:main'
 
 [project.urls]
 Repository = "https://github.com/contrick64/daily-diary"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]

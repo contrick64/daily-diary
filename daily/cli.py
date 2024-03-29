@@ -1,9 +1,9 @@
 import argparse
 from datetime import datetime
 
-from config import load_conf
-from journal import add_entry, add_write_headers
-from utils import make_dirpath, open_in_editor, wrap_file
+from .config import load_conf
+from .journal import add_entry, add_write_headers
+from .utils import make_dirpath, open_in_editor, wrap_file
 
 conf = load_conf()
 

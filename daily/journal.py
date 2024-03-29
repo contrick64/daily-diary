@@ -2,8 +2,8 @@ from datetime import datetime
 from pathlib import Path
 import re
 
-from config import load_conf, parse_time_format_string
-from utils import wrap_preserving_newlines
+from .config import load_conf, parse_time_format_string
+from .utils import wrap_preserving_newlines
 
 conf = load_conf()
 
