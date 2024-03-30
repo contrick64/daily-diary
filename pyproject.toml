@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "daily"
-version = "0.1.1"
+version = "0.2"
 description = "A command line tool for keeping a markdown diary"
 readme = "README.md"
 authors = [{name = "Connor Murphy"}]
