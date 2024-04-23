@@ -3,8 +3,8 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "daily"
-version = "0.2"
+name = "daily-diary"
+version = "0.1.1"
 description = "A command line tool for keeping a markdown diary"
 readme = "README.md"
 authors = [{name = "Connor Murphy"}]
@@ -13,9 +13,10 @@ keywords = ["cli", "markdown", "journal", "diary"]
 classifiers = [
 "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
 ]
+requires-python = ">=3.10"
 
 [project.scripts]
-daily = 'daily.daily:main'
+daily = 'daily.cli:main'
 
 [project.urls]
 Repository = "https://github.com/contrick64/daily-diary"
