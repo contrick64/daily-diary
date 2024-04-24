@@ -18,9 +18,6 @@ def get_file_contents(file_path: Path) -> str:
 def get_dated_file_path(dir: Path, date: datetime, filename_format: str) -> None:
     return dir.joinpath(date.strftime(filename_format))
 
-def get_today_file_path(dir: Path, filename_format: str) -> None:
-    return get_dated_file_path(dir, datetime.now(), filename_format)
-
 def print_files_in_date_range(dir: Path, filename_format: str, start_date: datetime = datetime.now(), end_date: datetime = datetime.now(),color:bool=True) -> None:
     print(f"\nPrinting files from {start_date.strftime(conf['input_date_format'])} to {end_date.strftime(conf['input_date_format'])}")
     if start_date > end_date:
@@ -38,10 +35,6 @@ def print_files_in_date_range(dir: Path, filename_format: str, start_date: datet
     print()
     return
 
-def print_today_file(dir: Path, filename_format: str) -> None:
-    print(get_file_contents(get_today_file_path(dir, filename_format)))
-    return
-
 def print_number_of_days(dir: Path, filename_format: str, num_days: int,color:bool) -> None:
     print_files_in_date_range(dir, filename_format, datetime.now() - timedelta(days=num_days), datetime.now(),color=color)
     return
@@ -55,6 +48,11 @@ def colorize_markdown_string(string: str) -> str:
     string = re.sub(r'(?<=## \d\d:\d\d [AP]M )=', f'{Color.YELLOW}\\g<0>{Color.OFF}', string)
     return string
 
-def view_entries(dir: str, filename_format: str, num_days: int=1,color:bool=True) -> None:
-    print_number_of_days(make_dirpath(dir),filename_format,num_days,color)
+def view_entries(dir: str, filename_format: str, num_days: int|None=None,color:bool=True,start_date:datetime|None=None,end_date:datetime|None=None) -> None:
+    dir = make_dirpath(dir)
+    if num_days:
+        print_number_of_days(dir,filename_format,num_days,color)
+    if start_date:
+        end_date = end_date if end_date else datetime.now()
+        print_files_in_date_range(dir,filename_format,start_date,end_date)
     return

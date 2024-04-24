@@ -24,12 +24,25 @@ def parse_args():
     edit_parser = subparsers.add_parser('edit', parents=[all_entry_parser], help="Edit today's entry without adding any headers")
 
     view_parser = subparsers.add_parser('view', parents=[all_entry_parser], help="Print entries to the terminal")
-    view_parser.add_argument('days', type=int, help="The number of days back to display")
+    view_parser.add_argument('-d','--days', type=int, help="The number of days back to display (cannot be used with --to or --from)")
     view_parser.add_argument('--no-color',dest='color', action="store_false", help="Turn off colors in the printed entries")
+    view_parser.add_argument('-f', '--from',dest='from_date', help="Start date of entries to print in YYYY-MM-DD format (cannot be used with --days)")
+    view_parser.add_argument('-t','--to',dest='to_date', help="End date of entries to print in YYYY-MM-DD format (cannot be used with --days)")
 
     parser.set_defaults(command="write")
 
     args = parser.parse_args()
+
+    if args.days is not None and (args.to_date or args.from_date):
+        view_parser.error("--days cannot be set with --from or --to")
+    if args.to_date is not None and args.from_date is None:
+        parser.error("--from must be set when using --to")
+
+    if args.to_date:
+        args.to_date = datetime.strptime(args.to_date,conf['input_date_format'])
+    if args.from_date:
+        args.from_date = datetime.strptime(args.from_date,conf['input_date_format'])
+
     return args
 
 def main():
@@ -53,7 +66,7 @@ def main():
             print(f"Edited {today_file}")
 
         case 'view':
-            view_entries(conf['journal_dir'],conf['filename_format'],args.days,color=args.color)
+            view_entries(conf['journal_dir'],conf['filename_format'],num_days=args.days,color=args.color,start_date=args.from_date,end_date=args.to_date)
 
     return
 

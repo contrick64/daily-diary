@@ -11,7 +11,8 @@ def load_conf():
         "h1_title_format": "%Y-%m-%d daily log",
         "h2_inline_format": '%I:%M %p %o (%O)\n%E',
         "h2_format": '%I:%M %p',
-        "wrap_width": 54
+        "wrap_width": 54,
+        "input_date_format": "%Y-%m-%d"
     }
     
     return config
