@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "daily-diary"
-version = "0.1.1"
+version = "0.2dev"
 description = "A command line tool for keeping a markdown diary"
 readme = "README.md"
 authors = [{name = "Connor Murphy"}]
@@ -14,6 +14,9 @@ classifiers = [
 "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
 ]
 requires-python = ">=3.10"
+dependencies = [
+"colorist"
+]
 
 [project.scripts]
 daily = 'daily.cli:main'
