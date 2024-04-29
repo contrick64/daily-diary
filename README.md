@@ -36,6 +36,8 @@ For the add command, these are required:
 - `-e/--entry`: The text to be entered into your diary.
 
 ## Contributing
+To install the dev branch, I recommend using `pip install -e .` in the repository dir.
+
 This is the first repository I am creating with the intent of inviting contributions and turning into a proper package. Please feel free to suggest features, make PRs, or report bugs as you see fit.
 
 I will also accept suggestions on how best to accept suggestions...
