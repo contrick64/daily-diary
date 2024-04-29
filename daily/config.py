@@ -22,7 +22,7 @@ def parse_time_format_string(string, **kwargs):
         'O':kwargs.get('mood_words',''),
         'E':kwargs.get('entry','')
     }
-    string = datetime.now().strftime(string)
     for directive,value in new_directives.items():
         string = re.sub('%'+directive,value,string)
+    string = datetime.now().strftime(string)
     return string
